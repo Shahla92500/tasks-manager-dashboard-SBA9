@@ -1,6 +1,6 @@
 
 import './App.css'
-import TaskList from './components/TaskList/TaskList'
+
 import DashBoard from './components/DashBoard/DashBoard'
 import TaskFilter from './components/TaskFilter/TaskFilter'
 

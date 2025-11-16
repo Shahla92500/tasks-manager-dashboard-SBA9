@@ -79,11 +79,6 @@ body {
   flex: 1; /* make them share the row nicely */
 }
 
-.filter-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
 .filter-block select,
 .filter-block input {
   padding: 6px 8px;
@@ -163,4 +158,99 @@ body {
   .dashboard-middle {
     flex-direction: column;
   }
+}
+
+.task-list {
+  max-width: 900px;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.task-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.task-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.task-desc {
+  margin: 0;
+  color: #444;
+}
+
+.task-head-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.pill-yellow { background: #fff7cc; color: #a67c00; }
+.pill-blue   { background: #e1ecff; color: #204f9c; }
+.pill-green  { background: #e0f7e9; color: #1c7a3f; }
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: #e11d48;
+  cursor: pointer;
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.priority-label {
+  text-transform: capitalize;
+}
+
+.priority-low { color: #059669; }
+.priority-medium { color: #d97706; }
+.priority-high { color: #b91c1c; }
+
+.status-select {
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.filters-bar {
+  display: flex;
+  gap: 2rem;           /* space between Status and Priority */
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.filter-label {
+  font-weight: 600;
+  font-size: 0.9rem;
 }
