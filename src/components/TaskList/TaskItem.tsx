@@ -11,11 +11,11 @@ import type {Task, TaskStatus} from "../../types/index"
 // }
 
 const statusClass: Record<TaskStatus, string> = {
-  'Pending': 'pill yellow',
-  'InProgress': 'pill blue',
-  'Completed': 'pill green'
+  'Pending': 'pill pill-yellow',
+  'InProgress': 'pill pill-blue',
+  'Completed': 'pill pill-green'
 };
-const priorityClass = { low: 'low', medium: 'medium', high: 'high' };
+const priorityClass = { Low: 'low', Medium: 'medium', High: 'high' };
 
 export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
   return (
@@ -23,39 +23,48 @@ export function TaskItem({ task, onStatusChange, onDelete }: TaskItemProps) {
       <div className="task-head">
         <div>
           <h3 className="task-title">{task.title}</h3>
-          <p className="task-desc">{task.description}</p>
+          {/* <p className="task-desc">{task.description}</p> */}
         </div>
-
         <div className="task-head-right">
-          <span className={statusClass[task.status]}>
-            {task.status}
-          </span>
-
-          <button className="delete-btn" onClick={() => onDelete(task.id)}>
+          {task.status && (
+            <span className={statusClass[task.status]}>
+              {task.status}
+            </span>
+          )}
+          <button className="delete-btn"  onClick={() => onDelete && onDelete(task.id)}>
             Delete
           </button>
         </div>
       </div>
 
+      {/* description */}
+      <p className="task-desc">{task.description}</p>
+
+      {/* bottom row: priority + due date */}
       <div className="task-meta">
-        <span className={`priority-label ${priorityClass[task.priority]}`}>
-          Priority: {task.priority}
-        </span>
+        {task.priority && (
+          <span
+            className={`priority-label ${priorityClass[task.priority]}`}
+          >
+            Priority: {task.priority}
+          </span>
+        )}
 
-        <span className="due-label">
-          Due: {new Date(task.dueDate).toLocaleDateString()}
+        <span className="task-due">
+          Due:{" "}
+          {task.dueDate &&
+            new Date(task.dueDate).toLocaleDateString()}
         </span>
-
         {/* <select
-          className="status-select"
+          className="sort-select"
           value={task.status}
           onChange={e =>
             onStatusChange(task.id, e.target.value as TaskStatus)
           }
         >
-          <option value="pending">Pending</option>
-          <option value="in-progress">In Progress</option>
-          <option value="completed">Completed</option>
+          <option value="pending">Title</option>
+          <option value="in-progress">Due Date</option>
+          <option value="completed">Priority</option>
         </select> */}
       </div>
     </section>

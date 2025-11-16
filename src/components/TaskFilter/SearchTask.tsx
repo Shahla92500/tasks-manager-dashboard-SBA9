@@ -38,11 +38,11 @@ function SearchTask({id, title,description, status, priority, dueDate} : Task){
 
   return (
         <div>
-            
+
             <TaskList tasks={filteredTasks} />
         </div>
    )
 
 
  }
-export default TaskFilter 
+export default SearchTask 
