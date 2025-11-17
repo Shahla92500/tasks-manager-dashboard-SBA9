@@ -3,9 +3,10 @@ import './App.css'
 
 import DashBoard from './components/DashBoard/DashBoard'
 import TaskFilter from './components/TaskFilter/TaskFilter'
+import { sortTasks } from './utils/sortTasks'
 
 import { useState } from 'react'
-import type{Task, TaskStatus, Priority } from './types'
+import type{Task, TaskStatus, Priority, SortKey, NewTaskInput } from './types'
 
 
 export const initialTasks : Task[] = [
@@ -29,10 +30,13 @@ function App() {
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'All'>('All');
   const [priorityFilter, setPriorityFilter] = useState<Priority |'All'>('All')
   const [searchTask, setSearchTask] = useState<string>("");
+  const [sortBy, setSortBy] = useState<SortKey>("None");
   // const onDelete= ()=>{};
   // const onStatusChange = () =>{};
   console.log("tasks in Ap", tasks)
-
+// test if sort function works:
+    const sorted = sortTasks(initialTasks, "Priority"); 
+    console.log("Sorted tasks in Ap", sorted)
 
   // ===here I passe handlers passed to children ===
   const handleStatusChange = (id: string, next: TaskStatus) =>
@@ -44,8 +48,22 @@ function App() {
             )
     );
 
-//  const handleDelete = (id: string) =>
-//     setTasks(prev => prev.filter(t => t.id !== id));
+ const handleDelete = (id: string) =>
+    setTasks(prev => prev.filter(t => t.id !== id));
+
+ const handleAddTask = (data: NewTaskInput) => {
+    setTasks(prev => [
+      ...prev,
+      {
+        id: data.id,
+        title: data.title,
+        description: data.description,
+        priority: data.priority,
+        status: "Pending",      // default status
+        // dueDate can be added later if you want a field for it
+      },
+    ]);
+  };
 
   return (
     <div>
@@ -57,13 +75,18 @@ function App() {
         onPriorityChange = {setPriorityFilter}
         searchTask={searchTask}
         onSearchChange={setSearchTask}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        // onAddTask={handleAddTask}  
       />
       <TaskFilter
       tasks={tasks}
       statusFilter={statusFilter}
       priorityFilter={priorityFilter}
       searchTask={searchTask}
+      sortBy={sortBy}
     />
+
       {/* <TaskList
         tasks={tasks}
       /> */}

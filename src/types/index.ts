@@ -1,6 +1,7 @@
 
 export type TaskStatus = "Pending" | "InProgress" | "Completed";
 export type Priority = "Low" | "Medium" | "High";
+export type SortKey = "None" | "Title" | "Due-Date" | "Priority";
 
 //interface for: Task data structure
 export interface Task {
@@ -12,6 +13,14 @@ export interface Task {
   dueDate?: string;            
 }
 
+export interface NewTaskInput {
+  id: string;
+  title: string;
+  description: string;
+  priority: Priority;
+  status: string
+  dueDate?: Date
+}
 //interface for: Task list props
 export interface TaskListProps {
   tasks: Task[];
