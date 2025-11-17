@@ -13,14 +13,6 @@ export interface Task {
   dueDate?: string;            
 }
 
-export interface NewTaskInput {
-  id: string;
-  title: string;
-  description: string;
-  priority: Priority;
-  status: string
-  dueDate?: Date
-}
 //interface for: Task list props
 export interface TaskListProps {
   tasks: Task[];
@@ -28,18 +20,19 @@ export interface TaskListProps {
   onDelete?: (taskId: string) => void;
 }
 
-//interface for: Form data
-export interface TaskFormData {
-name: string;
-priority: string;
-status: string;
-}
+// //interface for: Form data
+// export interface TaskFormData {
+// name: string;
+// priority: string;
+// status: string;
+// }
 
 //interface for: Filter list props
 export interface FilterBarProps {
   selectedStatus: TaskStatus | "All",
-  selectedPriority: Priority | "All",
   onStatusChange: (s: TaskStatus | "All") =>void,
+  
+  selectedPriority: Priority | "All",
   onPriorityChange: (p: Priority | "All") => void,
 }
 

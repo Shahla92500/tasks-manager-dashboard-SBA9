@@ -1,4 +1,4 @@
-import type { TaskStatus, Priority, SortKey, NewTaskInput } from "../../types";
+import type { TaskStatus, Priority, SortKey, Task } from "../../types";
 import { useState } from "react";
 
 interface DashBoardProps {
@@ -10,19 +10,15 @@ interface DashBoardProps {
   onSearchChange: (value: string) => void;
   sortBy: SortKey;
   onSortChange: (value: SortKey) => void;
-//   onAddTask: (task: NewTaskInput) => void;
+  onAddTask: (task: Task) => void;
 }
 
 export function DashBoard({
-  selectedStatus,
-  selectedPriority,
-  onStatusChange,
-  onPriorityChange,
-  searchTask,
-  onSearchChange,
-  sortBy,
-  onSortChange,
-//   onAddTask,
+  selectedStatus, onStatusChange,
+  selectedPriority, onPriorityChange,
+  searchTask,  onSearchChange,
+  sortBy,  onSortChange,
+  onAddTask,
 }: DashBoardProps) {
 
   // --- form local state ---
@@ -30,29 +26,33 @@ export function DashBoard({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<Priority>("Medium");
+  const [status, setStatus] = useState<TaskStatus>("Pending");
+  const [dueDate, setDueDate] = useState("");
 
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!taskId.trim() || !title.trim()) return; // simple validation
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!taskId.trim() || !title.trim()) return; // simple validation
 
-//     onAddTask({
-//       id: taskId.trim(),
-//       title: title.trim(),
-//       description: description.trim(),
-//       priority
-//     });
+    const newTask: Task = {
+        id: taskId.trim(),
+        title: title.trim(),
+        description: description.trim(),
+        priority,
+        status,   
+        dueDate 
+    };
+    onAddTask(newTask);
 
-//     // clear fields
-//     setTaskId("");
-//     setTitle("");
-//     setDescription("");
-//     setPriority("Medium");
-//   };
+    // clear fields
+    setTaskId("");
+    setTitle("");
+    setDescription("");
+    setPriority("Medium");
+  };
   return (
     <div className="dashboard">
       {/* === Top filters row === */}
       <div className="dashboard-top">
-        {/* Status filter */}
         {/* //====add sort */}
         <div className="filter-block">
           <div className="filter-label">Sort by</div>
@@ -66,11 +66,11 @@ export function DashBoard({
             <option value="Priority">Priority</option>
           </select>
         </div>
-
         {/* end of add sort */}
+
+        {/* Status filter */}
         <div className="filter-block">
           <div className="filter-label">Status</div>
-          {/* <span className="filter-label">Status --</span> */}
           <select
             value={selectedStatus}
             onChange={(e) =>
@@ -100,6 +100,7 @@ export function DashBoard({
             <option value="Low">Low</option>
           </select>
         </div>
+
         {/* Search task */}
         <div className="filter-block">
           <div className="filter-label">Search task</div>
@@ -111,37 +112,53 @@ export function DashBoard({
           />
         </div>
       </div>
-      {/* Right: default priority/status info */}
-      {/* === Middle form row === */}
+
+
+      {/* adding new task in a form */}
       <div className="dashboard-middle">
         {/* Left: simple form */}
-        <div className="form-box">
+        <form className="form-box" onSubmit={handleSubmit}>
           <div className="form-title">Add a new task</div>
-          <div>
-            <label>
-              Task Id: <input type="text" />
-            </label>
-          </div>
-          <div>
-            <label>
-              Title: <input type="text" />
-            </label>
-            <label>
-              Description: <input type="text" />
-            </label>
-          </div>
-          <div>
-            <label>
-              Priority: <input type="text" />
-            </label>{" "}
-          </div>
-        </div>
+          <div> <label> Task Id: <input type="text"
+                    value={taskId}
+                    onChange={e => setTaskId(e.target.value)}/> 
+                </label>  
+                <label> Title: <input type="text"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}/> 
+                </label>
+                <label> Description: <input type="text"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}/> 
+                </label>
+                <label> Priority: <select
+                    value={priority}
+                    onChange={e => setPriority(e.target.value as Priority)}
+                >
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </label>
+                <label> Status: <select
+                    value={status}
+                    onChange={e => setStatus(e.target.value as TaskStatus)}
+                >
+                    <option value="Pending">High</option>
+                    <option value="InProgress">Medium</option>
+                    <option value="Completed">Low</option>
+                  </select>
+                </label>
+                <label> Due Date: <input type="text" 
+                    value={dueDate}
+                    onChange={e => setDueDate(e.target.value)}/> 
+                </label>   
+            </div>                          
+                <button type="submit" className="add-task-btn">Add a new task</button>
+          {/* </div> */}
+        </form>
 
-        {/* Right: default priority/status info */}
-        <div className="defaults-box">
-          <div>priority = Low</div>
-          <div>status = Pending</div>
-        </div>
+
       </div>
     </div>
   );

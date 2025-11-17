@@ -1,4 +1,4 @@
-import type{ Task, TaskItemProps, TaskListProps } from "../../types/index";
+import type{ TaskListProps } from "../../types/index";
 import TaskItem from "./TaskItem";
 
 

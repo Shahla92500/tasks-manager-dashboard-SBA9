@@ -6,7 +6,7 @@ import TaskFilter from './components/TaskFilter/TaskFilter'
 import { sortTasks } from './utils/sortTasks'
 
 import { useState } from 'react'
-import type{Task, TaskStatus, Priority, SortKey, NewTaskInput } from './types'
+import type{Task, TaskStatus, Priority, SortKey } from './types'
 
 
 export const initialTasks : Task[] = [
@@ -31,9 +31,11 @@ function App() {
   const [priorityFilter, setPriorityFilter] = useState<Priority |'All'>('All')
   const [searchTask, setSearchTask] = useState<string>("");
   const [sortBy, setSortBy] = useState<SortKey>("None");
+
   // const onDelete= ()=>{};
   // const onStatusChange = () =>{};
   console.log("tasks in Ap", tasks)
+
 // test if sort function works:
     const sorted = sortTasks(initialTasks, "Priority"); 
     console.log("Sorted tasks in Ap", sorted)
@@ -51,7 +53,7 @@ function App() {
  const handleDelete = (id: string) =>
     setTasks(prev => prev.filter(t => t.id !== id));
 
- const handleAddTask = (data: NewTaskInput) => {
+ const handleAddTask = (data: Task) => {
     setTasks(prev => [
       ...prev,
       {
@@ -60,7 +62,7 @@ function App() {
         description: data.description,
         priority: data.priority,
         status: "Pending",      // default status
-        // dueDate can be added later if you want a field for it
+        dueDate : "To Be Defined"
       },
     ]);
   };
@@ -70,14 +72,18 @@ function App() {
       
       <DashBoard
         selectedStatus = {statusFilter} //"All"
-        selectedPriority = {priorityFilter}//"All"
         onStatusChange= {setStatusFilter}
+        
+        selectedPriority = {priorityFilter}//"All"
         onPriorityChange = {setPriorityFilter}
+
         searchTask={searchTask}
         onSearchChange={setSearchTask}
+
         sortBy={sortBy}
         onSortChange={setSortBy}
-        // onAddTask={handleAddTask}  
+        
+        onAddTask={handleAddTask}  
       />
       <TaskFilter
       tasks={tasks}
